@@ -1,14 +1,17 @@
+
 import getStripe from "@/utils/get-stripe";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { AppBar, Box, Button, Container, Toolbar, Typography } from "@mui/material";
+import Head from 'next/head';
+
 
 export default function Home() {
   return (
     <Container maxWidth="100vw">
-      <head>
+      <Head>
         <title>FlashCard SaaS</title>
         <meta name = "description" content="Create flashcard from a text prompt"></meta>
-      </head>
+      </Head>
 
       <AppBar position="static">
         <Toolbar>
