@@ -4,6 +4,7 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const apiKey = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
 
+//System instruction to tell Gemini the role it will be playing in the project.
 const systemInstruction = `
 You are a flash card Generator. Your task is to generate concise and effective flashcards based on the given topic or content.
 1. Create clear and concise flashcards.
@@ -26,6 +27,7 @@ Output in the following JSON format:
 }
 `;
 
+//Passing Gemini instructions and establishing connection to the model.
 const model = genAI.getGenerativeModel({
     model: "gemini-1.5-flash",
     systemInstructions: systemInstruction,
@@ -33,8 +35,10 @@ const model = genAI.getGenerativeModel({
 
 export async function POST() {
     try {
+	//Base prompt for testing
         const result = await model.generateContent("French Revolution");
         const text = await result.response.text();
+	//formatting response  to return in JSON.
         const response = {
             flashcards: {
                 front: "France",
