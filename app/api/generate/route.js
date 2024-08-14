@@ -16,15 +16,15 @@ You are a flash card Generator. Your task is to generate concise and effective f
 8. Keep the flashcards concise and to the point.
 9. If a prompt is broad give a brief overview of the topic.
 10. Ensure that each flash card focuses on a piece of information or concept. 
-
-Output in the following JSON format:
-{
-    "flashcards":{
-        "front": str,
-        "back": str
-    }
-}
 `;
+// Output in the following JSON format:
+// {
+//     "flashcards":{
+//         "front": str,
+//         "back": str
+//     }
+// }
+// `;
 
 const model = genAI.getGenerativeModel({
     model: "gemini-1.5-flash",
@@ -37,7 +37,7 @@ export async function POST() {
         const text = await result.response.text();
         const response = {
             flashcards: {
-                front: "France",
+                front: "French Revolution",
                 back: text,
             },
         };
