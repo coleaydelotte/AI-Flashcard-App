@@ -33,52 +33,28 @@ export default function Generate() {
   const router = useRouter();
 
   const handleSubmit = async () => {
-    const data = await fetch("/api/generate", {
-      method: "POST",
-      body: text,
-    });
-    const flash = [{
-      "front": "Mercury",
-      "back": "The smallest planet in our solar system and closest to the sun. It has a rocky surface with craters and cliffs."
-  },
-  {
-      "front": "Venus",
-      "back": "The hottest planet in our solar system with a thick atmosphere of carbon dioxide, trapping heat. "
-  },
-  {
-      "front": "Earth",
-      "back": "The only planet known to support life, with a diverse range of ecosystems and a dynamic atmosphere."
-  },
-  {
-      "front": "Mars",
-      "back": "Known as the 'Red Planet' due to iron oxide on its surface. It has a thin atmosphere and evidence of past liquid water."
-  },
-  {
-      "front": "Jupiter",
-      "back": "The largest planet in our solar system, a gas giant with a powerful magnetic field and a Great Red Spot storm."
-  },
-  {
-      "front": "Saturn",
-      "back": "Known for its prominent ring system composed of ice and rock particles. It's also a gas giant with a low density."
-  },
-  {
-      "front": "Uranus",
-      "back": "An ice giant with a tilted axis, causing extreme seasons. It has a faint ring system and a blue-green color."
-  },
-  {
-      "front": "Neptune",
-      "back": "The farthest planet from the sun, an ice giant with strong winds and a dark blue color."
-  },
-  {
-      "front": "Dwarf Planets",
-      "back": "Celestial bodies orbiting the sun that are smaller than planets and haven't cleared their orbital path of other objects."
-  },
-  {
-      "front": "Asteroid Belt",
-      "back": "A region between Mars and Jupiter containing a large concentration of asteroids, remnants from the early solar system."
-  }]
-    setFlashcards(flash);
-    };
+    try {
+          const response = await fetch("/api/generate", {
+              method: "POST",
+              body: JSON.stringify({ text }),
+              headers: {
+                  "Content-Type": "application/json"
+              }
+          });
+
+          if (!response.ok) {
+              throw new Error("Failed to fetch flashcards");
+          }
+
+          const data = await response.json();
+          console.log("Flashcards:", data.flashcards);
+
+          setFlashcards(data.flashcards || []);
+      } catch (error) {
+          console.error("Error fetching flashcards:", error);
+          setFlashcards([]);
+      }
+  };
 
   const handleCardClick = (id) => {
     setFlipped((prev) => ({
@@ -134,7 +110,6 @@ export default function Generate() {
       alert("There was an error saving your flashcards. Please try again.");
     }
   };
-  
 
   return (
     <Container maxWidth="md">

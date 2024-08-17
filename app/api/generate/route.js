@@ -17,18 +17,14 @@ You are a flash card Generator. Your task is to generate concise and effective f
 9. If a prompt is broad give a brief overview of the topic.
 10. Ensure that each flash card focuses on a piece of information or concept.
 11. Only generates 10 flashcards per request.
-
-Output in the following format:
-[
-    {
-        "front":"str",
-        "back":"str"
-    }, 
-    {
-        "front":"str",
-        "back":"str"
+12. Don't use markdown language
+Output in the following JSON format, check to see if the output is in the correct JSON format.
+{
+    "flashcards":{
+        "front": str,
+        "back": str
     }
-]
+}
 `;
 
 const model = genAI.getGenerativeModel({
@@ -37,32 +33,18 @@ const model = genAI.getGenerativeModel({
 });
 
 export async function POST(req) {
-    try {
-        const data = await req.text();
+    const data = await req.text();
 
-        if (!data.trim()) {
-            return NextResponse.json({ error: "Prompt is required" }, { status: 400 });
-        }
+    const prompt = systemInstruction + data;
+    const result = await model.generateContent(prompt);
+    const text = await result.response.text();
 
-        const prompt = systemInstruction + data;
-        const result = await model.generateContent(prompt);
-        const text = await result.response.text();
-
-        if (!text.trim()) {
-            return NextResponse.json({ error: "No content generated" }, { status: 500 });
-        }
-
-        const response = {
-            flashcards: {
-                front: data,
-                back: text,
-            },
-        };
-
-        // console.log("Generated content:", response);
-        return new NextResponse(response);
-    } catch (error) {
-        console.error("Error generating content:", error);
-        return NextResponse.json({ error: "Failed to generate content" }, { status: 500 });
+    if (!text.trim()) {
+        return NextResponse.json({ error: "No content generated" }, { status: 500 });
     }
+
+    const flashcards = JSON.parse(text);
+
+    console.log("Generated content:", flashcards);
+    return NextResponse.json(flashcards, { status: 200 });
 }
