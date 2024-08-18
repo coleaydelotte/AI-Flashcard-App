@@ -4,7 +4,6 @@ import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { AppBar, Box, Button, Container, Grid, Toolbar, Typography } from "@mui/material";
 import Head from 'next/head';
 
-
 export default function Home() {
   return (
     <Container maxWidth="100vw">
@@ -30,7 +29,7 @@ export default function Home() {
       }}>
         <Typography variant="h2" gutterBottom>Welcome to Flashcard SaaS</Typography>
         <Typography variant="h5" gutterBottom>{" "} Create flashcards from a text prompt</Typography>
-        <Button variant="contained" color="primary" sx={{ mt: 2 }}>Get Started</Button>
+        <Button href="/generate" variant="contained" color="primary" sx={{ mt: 2 }}>Get Started</Button>
       </Box>
       <Box sx={{ my: 6 }}>
         <Typography variant="h4" gutterBottom >
@@ -57,11 +56,11 @@ export default function Home() {
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography variant="h6" gutterBottom >
-              Accesible Anywhere
+              Accessible Anywhere
             </Typography>
             <Typography>
               {' '}
-              Access your flashcars from any device, at any time. Study on the go with ease.
+              Access your flashcards from any device, at any time. Study on the go with ease.
             </Typography>
           </Grid>
         </Grid>
@@ -102,7 +101,7 @@ export default function Home() {
                 {' '}
                 Unlimited flashcards and storage, with priority support.
               </Typography>
-              <Button variant="contained" color="primary" sx={{mt:2}}>Choose Basic</Button>
+              <Button variant="contained" color="primary" sx={{mt:2}}>Choose Pro</Button>
             </Box>
 
           </Grid>
