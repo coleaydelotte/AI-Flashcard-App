@@ -6,7 +6,9 @@ import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { AppBar, Box, Button, Container, Grid, Toolbar, Typography } from "@mui/material";
 import Head from 'next/head';
 
+
 export default function Home() {
+
 
   const handleSubmit = async () => {
     const checkoutSession = await fetch('/api/checkout_session', {
@@ -22,6 +24,9 @@ export default function Home() {
       console.error(checkoutSession.message)
       return
     }
+
+
+
 
     const stripe = await getStripe()
     const {error} = await stripe.redirectToCheckout({
