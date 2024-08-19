@@ -1,9 +1,9 @@
 'use client'
-import { useEffec, useState } from "react"
+import { useEffect, useState } from "react"
 import {useRouter} from 'next/navigation'
 import getStripe from "@/utils/get-stripe"
 import {useSearchParams} from 'next/navigation'
-import { Typography } from "@mui/material"
+import { Typography, CircularProgress, Container, Box, Button} from "@mui/material"
 
 const ResultPage = () => {
     const router = useRouter()
@@ -20,7 +20,7 @@ const ResultPage = () => {
 
             try {
                 const res = await fetch(
-                    '/api/checkout_session?session_id=${session_id}',
+                    `/api/checkout_session?session_id=${session_id}`,
                 )
                 const sessionData = await res.json()
                 if (res.ok) {
@@ -29,7 +29,8 @@ const ResultPage = () => {
                     setError(sessionData.error)
                 }
             } catch (err) {
-                setError('An error has occured')
+                console.error(err)
+                setError('An error has occurred')
             } finally {
                 setLoading(false)
             }
@@ -70,7 +71,7 @@ const ResultPage = () => {
                 <Box sx ={{mt:22}}>
                     <Typography variant="h6">Session ID: {session_id}</Typography>
                     <Typography variant="body1">We have received your payment. You will receive an email with the orders details shortly</Typography>
-
+                    <Button href="/generate">Return Home</Button>
                 </Box>
                 </>
             ): (<><Typography variant="h4">Payment Failed</Typography>

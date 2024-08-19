@@ -15,7 +15,7 @@ export default function Home() {
       method: 'POST',
       headers: {
         origin: 'http://localhost:3000',
-      }
+      },
     })
 
     const checkoutSessionJson = await checkoutSession.json()
@@ -24,9 +24,6 @@ export default function Home() {
       console.error(checkoutSession.message)
       return
     }
-
-
-
 
     const stripe = await getStripe()
     const {error} = await stripe.redirectToCheckout({

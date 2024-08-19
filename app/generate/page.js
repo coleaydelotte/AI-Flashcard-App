@@ -122,6 +122,18 @@ export default function Generate() {
           alignItems: "center",
         }}
       >
+        <Button
+        href="/"
+        variant="contained"
+        color="primary"
+        sx={{
+          position: 'absolute',
+          top: 16,
+          left: 16,
+        }}
+      >
+        Home
+      </Button>
         <Typography variant="h4">Generate Flashcards</Typography>
         <Paper sx={{ p: 4, width: "100%" }}>
           <TextField
